@@ -12,6 +12,7 @@ class AdminController extends Controller{
 		
 		}else{
 			//跳到登录界面：TODO：：
+			redirect('/Index/index');
 			exit();	
 		}
 
