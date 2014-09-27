@@ -11,20 +11,19 @@ abstract class Api{
 
 
 
-
-	//模型
+//模型
 	protected $model;
 
 	//构造函数
 	public function __construct(){
 	
-		self::_init();
+		$this->_init();
 	}
 
 
 
 	//初始化操作
-	abstract protected _init();
+	abstract protected function _init();
 	
 	
 

@@ -18,13 +18,13 @@ abstract class Api{
 	//构造函数
 	public function __construct(){
 	
-		self::_init();
+		$this->_init();
 	}
 
 
 
 	//初始化操作
-	abstract protected _init();
+	abstract protected function _init();
 	
 	
 
