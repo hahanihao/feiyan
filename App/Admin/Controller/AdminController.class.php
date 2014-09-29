@@ -9,10 +9,10 @@ class AdminController extends Controller{
 	public function _initialize(){
 		if((is_login())){
 			$this->assign('login_info',session('LOGIN_INFO'));
-		
+
 		}else{
 			//跳到登录界面：TODO：：
-			redirect('/Index/index');
+			$this->redirect('Index/index');
 			exit();	
 		}
 
@@ -48,24 +48,39 @@ class AdminController extends Controller{
 		if(is_numeric($input_var)){
 			return $input_var;
 		}else{
-		$input_var=safe_replace($input_var);
-		$input_var=remove_xss($input_var);
-		$input_var=preg_replace('/<script.*>.*(\r)*(\n)*(\a)*(\s)*(<\/script>)?/','',$input_var);
+			$input_var=safe_replace($input_var);
+			$input_var=remove_xss($input_var);
+			$input_var=preg_replace('/<script.*>.*(\r)*(\n)*(\a)*(\s)*(<\/script>)?/','',$input_var);
 		}
 		return $input_var;
 	}
 
 
 
+	/**返回上传图片的信息
+	 * 返回的是一个关联数组
+	 * 包含了文件名和文件的路劲
+	 */
+	public function upload_img(){
+		$file=$_FILES;
+		if($file && count($file)>0){
+			$upload = new \Think\Upload();// 实例化上传类
+			$upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+			$upload->savePath  =     C('UPLOADIMG_DIR'); // 设置附件上传目录
+			// 上传文件 
+			$result   =   $upload->upload();
+			if(!$result) {// 上传错误提示错误信息
+				return false;
+			}else{// 上传成功 获取上传文件信息
+				return $result;
+			}
+		}else{
+			$file=array();
+			return $file;
+		}
 
-
-
+	}
 
 
 
 }
-
-
-
-
-?>

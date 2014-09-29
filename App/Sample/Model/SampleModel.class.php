@@ -2,9 +2,9 @@
 namespace User\Module;
 use Think\Module;
 
-class UserModel extends Module{
+class SampleModel extends Module{
 
-	protected $tableName='user';
+	protected $tableName='sample';
 	protected $tablePrefix='';
 
 

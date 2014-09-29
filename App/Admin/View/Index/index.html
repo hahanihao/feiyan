@@ -198,11 +198,10 @@ function call_ckeck_login(data){
 	if(flag == true){
 		var message=data.message;
 		var url=data.url;
-		console.log(typeof(url));
 		if(url !="" && typeof(url)!="undefined"){
 			jshelper.redirect(data.url);
 		}else{
-			jshelper.show_message(data.msg);
+			jshelper.show_message(message);
 			$("#useraccount").val("");
 			$("#password").val("");
 			$("#verify_text").val("");

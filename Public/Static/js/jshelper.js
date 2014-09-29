@@ -26,6 +26,7 @@ var jshelper={
 	show_message:function(message){
 				 
 				 
+		window.alert(message);
 		return ;		 
 	},
 
