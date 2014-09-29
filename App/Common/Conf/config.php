@@ -44,7 +44,8 @@ return array(
 	'URL_MODEL'				=>	2  ,     //采用重写机制
 
 	/*上传文件的路径*/
-	'UPLOADIMG_DIR' 		=> 'Uploads/Picure',
+	'UPLOADIMG_DIR' 		=> './Uploads/',
+	'UPLOADIMG_URL' 		=> '/Uploads/',
 
 
 );

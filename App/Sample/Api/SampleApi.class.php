@@ -7,7 +7,7 @@
 
 namespace Sample\Api;
 use Sample\Api\Api;
-
+use Sample\Model\SampleModel;
 
 class SampleApi extends Api{
 
@@ -15,7 +15,7 @@ class SampleApi extends Api{
 	//初始化（构造函数的一部分）
 	//实例化用户模型
 	public function _init(){
-		$this->model=D('Sample');	
+		$this->model= new SampleModel();	
 
 	}
 
@@ -26,7 +26,6 @@ class SampleApi extends Api{
 	 * false   return false 
 	 */
 	public function addSample($data){
-
 		//整理数据
 		$sample['s_name']=$data['name'];
 		$sample['s_models']=$data['models'];
@@ -53,7 +52,7 @@ class SampleApi extends Api{
 		if($result && is_int($result)){
 			$img=array();
 			foreach($data['img_info'] as $img_one){
-				$temp['i_url']=$fileinfo_one['savepath'].$fileinfo_one['savename'];
+				$temp['i_url']=$img_one['savepath'].$img_one['savename'];
 				$temp['s_id']=$result;
 				array_push($img,$temp);
 				unset($temp);
@@ -69,7 +68,6 @@ class SampleApi extends Api{
 		}else{
 			return FALSE;	
 		}
-
 	} 
 
 
@@ -80,20 +78,17 @@ class SampleApi extends Api{
 	 * return  false  /   $array
 	 */
 	public function getOneSample($id=null ,$models=null){
-
 		$result=null;
 		if($id==null){
-			$result=$this->model->where("s_models = %s",$model)->find();
+			$result=$this->model->relation(true)->where("s_models = %s",$model)->find();
 		}else{
-			$result=$this->model->where("s_id = %d",intval($id))->find();
+			$result=$this->model->relation(true)->where("s_id = %d",intval($id))->find();
 		}
-
 		if($result && is_array($result)){
 			return $result;
 		}else{
 			return FALSE;
 		}
-
 	}
 
 
@@ -101,10 +96,10 @@ class SampleApi extends Api{
 	 * 获取分页的样品信息
 	 * return array
 	 */
-	public function getSampleList(){
+	public function getSampleList($soldout=0){
 
-		$count = $this->model->where('status=1')->count();// 查询满足要求的总记录数
-		$Page = new \Think\Page($count,15);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+		$count = $this->model->where('s_soldout = %d')->count();// 查询满足要求的总记录数
+		$Page = new \Think\Page($count,15);// 实例化分页类 传入总记录数和每页显示的记录数(15)
 		$show = $Page->show();// 分页显示输出
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
 		$list = $this->model->where('s_soldout=0')->order('s_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();

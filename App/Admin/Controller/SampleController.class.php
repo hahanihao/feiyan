@@ -24,7 +24,8 @@ class SampleController extends AdminController{
 
 		$result=$this->sampleapi->getSampleList();
 		if($result && is_array($result)){
-			$this->assign('result',$result);
+			$this->assign('datalist',$result['datalist']);
+			$this->assign('page',$result['page']);
 			$this->display();
 		}else{
 			$this->error('还没有样品，请添加样品');
@@ -94,19 +95,15 @@ class SampleController extends AdminController{
 
 	//添加样品
 	public function addSample(){
-
 		$img_info=$this->upload_img();
 		if(!$img_info && !is_array($img_info) && count($img_info)<=0 ){
 			//文件上传不成功
 			$this->error('文件上传不成功！！！');	
 			return ;
 		}	
-
 		$data=I('post.');
-		var_dump($data);
-		exit();
 		//数据检测是否合理
-		if(empty($data['name']) || empty($data['models']) || empty($data['sizes']) || empty($data['price']) || empty($data['sole']['models']) || empty($data['sole']['wight']) || empty($data['insole']['models']) || empty(['insole']['firm']) || empty(['innerbox']['models']) || empty($data['innerbox']['format']) || empty($data['outerbox']['models']) || empty($data['outerbox']['format'])){
+		if(empty($data['name']) || empty($data['models']) || empty($data['sizes']) || empty($data['price']) || empty($data['sole']['models']) || empty($data['sole']['wight']) || empty($data['insole']['models']) || empty($data['insole']['firm']) || empty($data['innerbox']['models']) || empty($data['innerbox']['format']) || empty($data['outerbox']['models']) || empty($data['outerbox']['format'])){
 			$this->error('请填写样品重要信息！！！');
 			return ;	
 		}else{
@@ -117,9 +114,7 @@ class SampleController extends AdminController{
 			}else{
 				$this->error('样品添加失败！！！');	
 			}
-
 		}
-
 	}
 
 
@@ -139,6 +134,7 @@ class SampleController extends AdminController{
 
 		$result=$this->sampleapi->getOneSample($s_id);
 		if($result && is_array($result)){
+			$result['s_attribute']=unserialize($result['s_attribute']);
 			$this->assign('sample',$result);
 			$this->display();
 

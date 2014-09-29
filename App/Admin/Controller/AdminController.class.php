@@ -9,6 +9,7 @@ class AdminController extends Controller{
 	public function _initialize(){
 		if((is_login())){
 			$this->assign('login_info',session('LOGIN_INFO'));
+			$this->assign('upload_img',C('UPLOADIMG_URL'));
 
 		}else{
 			//跳到登录界面：TODO：：
@@ -66,7 +67,8 @@ class AdminController extends Controller{
 		if($file && count($file)>0){
 			$upload = new \Think\Upload();// 实例化上传类
 			$upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-			$upload->savePath  =     C('UPLOADIMG_DIR'); // 设置附件上传目录
+			$upload->savePath  =     ""; // 设置附件上传目录
+			$upload->rootPath  = 	 C('UPLOADIMG_DIR');//设置附件上传根目录
 			// 上传文件 
 			$result   =   $upload->upload();
 			if(!$result) {// 上传错误提示错误信息
