@@ -13,7 +13,7 @@ return array(
 	'DB_HOST'               =>  'localhost', // 服务器地址
 	'DB_NAME'               =>  'shoes_feiyan',          // 数据库名
 	'DB_USER'               =>  'root',      // 用户名
-	'DB_PWD'                =>  'wolf',          // 密码
+	'DB_PWD'                =>  'root',          // 密码
 	'DB_PORT'               =>  '3306',        // 端口
 	'DB_PREFIX'             =>  '',    // 数据库表前缀
 	'DB_FIELDTYPE_CHECK'    =>  false,       // 是否进行字段类型检查
@@ -42,9 +42,6 @@ return array(
 	'URL_CASE_INSENSITIVE'  =>  true,   // 默认false 表示URL区分大小写 true则表示不区分大小写
 
 	'URL_MODEL'				=>	2  ,     //采用重写机制
-
-	/*上传文件的路径*/
-	'UPLOADIMG_DIR' 		=> 'Uploads/Picure',
 
 
 );

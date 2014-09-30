@@ -49,16 +49,18 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
    var root = new TreeNode('系统菜单');
 
 
-          //员工管理start -----------A
-			  var modelA = new TreeNode('员工管理');
-			  var A1 = new TreeNode('员工列表', '__MODULE__/User/userlist', 'tree_node.gif', null, 'tree_node.gif', null);
-			  modelA.add(A1);
+          //员工管理start
+          var modelA = new TreeNode('员工管理');
+          var A1 = new TreeNode('员工列表', '__MODULE__/User/userlist', 'tree_node.gif', null, 'tree_node.gif', null);
+          modelA.add(A1);
+          var A2=new TreeNode('员工添加','__MODULE__/User/usertype','tree_node.gif',null,'tree_node.gif',null);
+          modelA.add(A2);
 
-			  root.add(modelA);
-		  //员工管理end
+          root.add(modelA);
+          //员工管理end
 
 
-		  //仓库管理start  -----------------B
+		  //仓库管理start
 
 		  //TODO::
 
@@ -68,18 +70,8 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
 
 
 
-		  //样品管理start ------------C
-			  var modelC = new TreeNode('样品管理');
-			  var C1 = new TreeNode('样品列表', '__MODULE__/Sample/index', 'tree_node.gif', null, 'tree_node.gif', null);
-			  modelC.add(C1);
+		  //样品管理start
 
-			  var C2 = new TreeNode('添加样品', '__MODULE__/Sample/addSampleUi', 'tree_node.gif', null, 'tree_node.gif', null);
-			  modelC.add(C2);
-
-			  var C3 = new TreeNode('修改样品', '__MODULE__/Sample/updateSampleUi', 'tree_node.gif', null, 'tree_node.gif', null);
-			  modelC.add(C3);
-			  root.add(modelC);
-	 
 
 
 		  //样品管理end

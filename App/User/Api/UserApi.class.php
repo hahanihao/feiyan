@@ -18,6 +18,88 @@ class UserApi extends Api{
 		$this->model=D('Member');	
 
 	}
+	//获取所有员工列表
+	public function getUserList(){
+		$result=$this->model->select();
+		
+		return $result;
+
+	}
+	//员工详情
+	public function getUserDetail($uid){
+		$result=$this->model->where("m_id='%d'",$uid)->find();
+		return $result;
+	}
+	//员工详情修改
+	public function getUserEdit($uid){
+		$result=$this->model->where("m_id='%d'",$uid)->find();
+		return $result;
+	}
+	//修改员工信息
+	public function userModify($m_id,$m_name,$m_price,$m_gender,$m_phone,$m_idcard,$m_address,$m_remark){
+		$result=$this->model->where("m_id='%d' AND m_name='%s' AND m_price='%s' AND m_gender='%s' AND m_phone='%s' AND m_idcard='%s' AND m_address='%s' AND m_remark='%s'",$m_id,$m_name,$m_price,$m_gender,$m_phone,$m_idcard,$m_address,$m_remark)->save();
+		if($result){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+	}
+	//删除员工信息
+	public function userDelete($uid){
+		$result=$this->model->where("m_id='%d'",$uid)->delete();
+		if($result){
+			return TRUE;
+		}else{
+			return FALSE;
+		}
+	}
+	//增加员工
+	//public  function addUser($m_name,$m_sex,$m_price,$m_phone,$m_card,$m_address,$m_)
+
+	//获取员工种类
+	public function getUserType(){
+		$this->model=null;
+		$this->model1=D('Memberkind');
+		$result=$this->model1->select();
+		return $result;
+	}
+	//删除员工种类
+	public function deleteUserType($uid){
+		$this->model=null;
+		$this->model1=M("Memberkind");
+		$result=$this->model1->where("mk_id='%d'",$uid)->delete();
+		return $result;
+	}
+	//修改工种单价，查询单价
+	public function modifyUserKind($uid){
+		$this->model=null;
+		$this->model1=D("Memberkind");
+		$result=$this->model1->where("mk_id='%d'",$uid)->find();
+		return $result; 
+	}
+	//修改单价
+	public function userModifyKind($uid,$mk_price){
+		$this->model=null;
+		$this->model1=D("Memberkind");
+		$result=$this->model1->where("mk_id='%d' AND mk_price='%s'",$uid,$mk_price)->save();
+		return $result;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	//登录接口
 	//return boolean 

@@ -31,16 +31,17 @@ class IndexController extends Controller{
 			$account=I("post.account");
 			if(empty($account)){
 				$data['flag']=false;
-				$data['message']="请填写账号";
+				$data['msg']="请填写账号";
 				$this->ajaxReturn($data);
 			}else{
 				$result=$this->userapi->checkAccount($account);
-				if($result){
+				if($result==TRUE){
 					$data['flag']=true;
+					$data['msg']='OK';
 					$this->ajaxReturn($data);
 				}else{
 					$data['flag']=true;
-					$data['message']="账号不存在";
+					$data['msg']="账号不存在";
 					$this->ajaxReturn($data);
 				}   
 			}
