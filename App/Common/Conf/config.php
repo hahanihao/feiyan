@@ -43,5 +43,12 @@ return array(
 
 	'URL_MODEL'				=>	2  ,     //采用重写机制
 
+<<<<<<< HEAD
+=======
+	/*上传文件的路径*/
+	'UPLOADIMG_DIR' 		=> './Uploads/',
+	'UPLOADIMG_URL' 		=> '/Uploads/',
+
+>>>>>>> de51379a490d9483ea76bdaa3203ed921ef06929
 
 );

@@ -9,7 +9,12 @@ class AdminController extends Controller{
 	public function _initialize(){
 		if((is_login())){
 			$this->assign('login_info',session('LOGIN_INFO'));
+<<<<<<< HEAD
 		
+=======
+			$this->assign('upload_img',C('UPLOADIMG_URL'));
+
+>>>>>>> de51379a490d9483ea76bdaa3203ed921ef06929
 		}else{
 			//跳到登录界面：TODO：：
 			redirect('/Index/index');
@@ -57,6 +62,31 @@ class AdminController extends Controller{
 
 
 
+<<<<<<< HEAD
+=======
+	/**返回上传图片的信息
+	 * 返回的是一个关联数组
+	 * 包含了文件名和文件的路劲
+	 */
+	public function upload_img(){
+		$file=$_FILES;
+		if($file && count($file)>0){
+			$upload = new \Think\Upload();// 实例化上传类
+			$upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+			$upload->savePath  =     ""; // 设置附件上传目录
+			$upload->rootPath  = 	 C('UPLOADIMG_DIR');//设置附件上传根目录
+			// 上传文件 
+			$result   =   $upload->upload();
+			if(!$result) {// 上传错误提示错误信息
+				return false;
+			}else{// 上传成功 获取上传文件信息
+				return $result;
+			}
+		}else{
+			$file=array();
+			return $file;
+		}
+>>>>>>> de51379a490d9483ea76bdaa3203ed921ef06929
 
 
 
