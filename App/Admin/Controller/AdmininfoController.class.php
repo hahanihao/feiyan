@@ -5,97 +5,209 @@
 
 namespace Admin\Controller;
 use Think\Controller;
+use Admininfo\Api\AdmininfoApi;
 
 class AdmininfoController extends AdminController{
 
-
+	private $admininfoapi=null;
 	public function _initialize(){
 
 		parent::_initialize();
+		$this->admininfoapi=new AdmininfoApi();
 
 	}
-
 	//left 边栏
 	public function left(){
 		$this->display();
 	}
-
-
 	//top 边栏
 	public function top(){
 		$this->display();
 	}
-
-
-
 	//管理员信息
 	public function index(){
-
-		$this->display();
-
+		session_start();
+		$account=$_SESSION['account'];
+		$result=$this->admininfoapi->getAdmininfo($account);
+		$this->assign("result",$result);
+		$this->display("index");
 	}
 
-
-
-
-
-
-
-	//password UI
-	public function updatePasswordUi(){
-
-		$this->display();
+	//修改密码
+	public function passwordUi(){
+		session_start();
+		$account=$_SESSION['account'];
+		$result=$this->admininfoapi->getAdmininfo($account);
+		$this->assign("result",$result);
+		$this->display("passwordUi");
 	}
 
-
-
-
-	//update  password 
+	//修改密码
 	public function updatePassword(){
-
-
-
-
+		$m_id=I('post.m_id');
+		$oldpass=I('post.oldpass');
+		$newpass=I('post.m_passwords');
+		$renewpass=I('post.newpassword2');
+		if(empty($oldpass)||empty($newpass)||empty($renewpass)){
+			$this->error("填写详细信息");
+		}else{
+			$result=$this->admininfoapi->updatePasswordInfoConform($m_id,$oldpass,$newpass,$renewpass);
+			if($result==1){
+				$this->error("输入密码与原密码不一致");
+			}
+			if($result==2){
+				$this->error("两次输入密码不一致");
+			}
+			if($result==3){
+				$this->success("修改成功");
+			}
+			if ($result==4) {
+				$this->error("修改失败");
+			}
+		}
 	}
-
-	//base info ui
-	public function baseInfo(){
-
-		$this->display();
-	}
-
-
-
-
-
 	//修改个人信息 操作
-	public function updateBaseInfo(){
-
-
-
+	public function updateBaseInfoBy(){
+		$data=I('post.');
+		$result=$this->admininfoapi->updateAdminInfo($data);
+		if($result){
+			$this->success("修改成功!");
+		}else{
+			$this->error("修改失败!");
+		}
 	}
 
 
 	//修改个人信息 UI
 	public function updateBaseInfoUi(){
-
-		$this->display();
-
-
+		session_start();
+		$account=$_SESSION['account'];
+		$result=$this->admininfoapi->getAdmininfo($account);
+		$this->assign("result",$result);
+		$this->display("adminmodify");
 	}
+
+	//获取管理员列表
+	public function adminList(){
+		$result=$this->admininfoapi->getAdminList();
+		$this->assign('list',$result);
+		$this->display();
+	}
+
+
+	//修改管理员组信息
+	public function updateAdminInfoUi(){
+		$m_id=I('get.m_id');
+		$result=$this->admininfoapi->updateAdminInfoUi($m_id);
+		if(empty($result)){
+			$this->error("你没有权限");
+		}else{
+			$this->assign('result',$result);
+			$this->display('updateAdminInfoUi');
+		}
+	}
+
+	//修改管理员信息
+	public function updateAdminGroupInfo(){
+		$data=I('post.');
+		if(empty($data['m_name'])||empty($data['m_phone'])||empty($data['m_idcard'])||empty($data['m_address'])){
+			$this->error("请填写完整信息 ");
+		}else{
+			$result=$this->admininfoapi->updateAdminGroupInf($data);
+			if($result){
+				$this->success("修改成功");
+			}else{
+				$this->error("修改失败");
+			}
+		}
+	}
+	//添加管理员类型
+	public function addoneadminkindUi(){
+		$result=$this->admininfoapi->getMemberKind();
+		$this->assign('list',$result);
+		$this->display();
+	}
+
+	//获取管理员类型
+	public function getMemberKindByAdd(){
+		$result=$this->admininfoapi->getMemberKind();
+		$this->assign('casetype',$result);
+		if(is_array($result)){
+           $this->display('addoneadminUi');
+        }else{
+            $this->error("请先添加管理员类型！！！");
+        }
+	}
+
+	//添加管理员
+	public function addOneAdmin(){
+		$data=I('post.');
+		if(empty($data['m_account'])||empty($data['m_passwords'])){
+			$this->error("账号和密码不能空");
+		}else{
+			$result=$this->admininfoapi->addOneAdminApi($data);
+			if($result==1){
+				$this->error("该账号已存在");
+			}
+			if($result==2){
+				$this->success("添加成功");
+			}
+			if($result==3){
+				$this->error("添加失败");
+			}
+		}
+	}
+
+	//删除管理员类型
+	public function deleteMemberKind(){
+		$m_id=I('get.mk_id');
+		$result=$this->admininfoapi->deleteMemberKind($m_id);
+		if($result==1){
+			$this->error("没有权限");
+		}
+		if ($result==2) {
+			$this->success("删除成功");
+		}
+		if($result==3){
+			$this->error("删除失败");
+		}
+	}
+
+	//添加管理员类型
+	public function addMemberkindType(){
+		$data=I('post.');
+		if(empty($data['mk_name'])){
+			$this->error("请输入管理员类型");
+		}else{
+			$result=$this->admininfoapi->addMemberkindType($data);
+			if($result==1){
+				$this->error("没有权限");
+			}
+			if ($result==2) {
+				$this->success("添加成功");
+			}
+			if($result==3){
+				$this->error("添加失败");
+			}
+		}
+	}
+
+
+
+
+
+
+
+
 
 	//判断是否有权限来操作其他管理员
 	public function checkHasPower(){
-	
 		//TODO:根据数据库设计表的字段来判断
-	
 	}
 
 	//其他管理员列表
 	public function otherAdminList(){
-	
 		$this->display();
-	
 	}
 
 	//删除其他管理员

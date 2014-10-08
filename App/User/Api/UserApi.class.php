@@ -19,25 +19,48 @@ class UserApi extends Api{
 
 	}
 	//获取所有员工列表
+	/***
+	*获取所有员工列表
+	*
+	*return array 二维数组
+	*/
 	public function getUserList(){
-		$result=$this->model->select();
-		
-		return $result;
-
+    $count = $this->model->count();// 查询满足要求的总记录数
+    $Page = new \Think\Page($count,15);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+    $result['page'] = $Page->show();// 分页显示输出
+    // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+    $result['datalist'] = $this->model->limit($Page->firstRow.','.$Page->listRows)->select();
+	return $result;
 	}
-	//员工详情
+
+	/***
+	*员工详情
+	*$uid 查询条件
+	*return array 一维数组
+	*/
 	public function getUserDetail($uid){
 		$result=$this->model->where("m_id='%d'",$uid)->find();
 		return $result;
 	}
-	//员工详情修改
+
+	/***
+	*员工详情修改
+	*$uid 查询条件
+	*return array 一维数组
+	*/
 	public function getUserEdit($uid){
 		$result=$this->model->where("m_id='%d'",$uid)->find();
 		return $result;
 	}
 	//修改员工信息
-	public function userModify($m_id,$m_name,$m_price,$m_gender,$m_phone,$m_idcard,$m_address,$m_remark){
-		$result=$this->model->where("m_id='%d' AND m_name='%s' AND m_price='%s' AND m_gender='%s' AND m_phone='%s' AND m_idcard='%s' AND m_address='%s' AND m_remark='%s'",$m_id,$m_name,$m_price,$m_gender,$m_phone,$m_idcard,$m_address,$m_remark)->save();
+	/***
+	*修改员工信息
+	*$data 查询条件
+	*return true or false
+	*/
+	public function userModify($data){
+		$uid=$data['m_id'];
+		$result=$this->model->where("m_id='%d'",intval($uid))->data($data)->save();
 		if($result){
 			return TRUE;
 		}else{
@@ -45,6 +68,11 @@ class UserApi extends Api{
 		}
 	}
 	//删除员工信息
+	/***
+	*删除员工信息
+	*$uid 查询条件
+	*return true or false
+	*/
 	public function userDelete($uid){
 		$result=$this->model->where("m_id='%d'",$uid)->delete();
 		if($result){
@@ -53,9 +81,46 @@ class UserApi extends Api{
 			return FALSE;
 		}
 	}
+	//员工类型获取
+	/***
+	*员工类型获取
+	*
+	*return array 二维数组
+	*/
+	public function getUserTypeBy(){
+		$this->model=null;
+		$this->model1=D("Memberkind");
+		$result=$this->model1->select();
+		return $result;
+	}
 	//增加员工
-	//public  function addUser($m_name,$m_sex,$m_price,$m_phone,$m_card,$m_address,$m_)
+	/***
+	*增加员工
+	*$data 查询条件
+	*return true or false
+	*/
+	public  function addUserSingle($data){
+		$uid='';
+		$result=$this->model->where("m_id=%d",intval($uid))->data($data)->add();
+		return $result;
+	}
+	/***
+	*查询某个员工信息
+	*$data 查询条件
+	*return array 二维数组
+	*/
+	//查询某个员工信息
+	public function findOneUser($data){
+		$where['m_name']=array('like',"%{$data}%");
+		$result=$this->model->where($where)->select();
+		return $result;
+	}
 
+	/***
+	*获取员工种类
+	*$data 查询条件
+	*return array 二维数组
+	*/
 	//获取员工种类
 	public function getUserType(){
 		$this->model=null;
@@ -63,6 +128,11 @@ class UserApi extends Api{
 		$result=$this->model1->select();
 		return $result;
 	}
+	/***
+	*删除员工种类
+	*$uid 查询条件
+	*return true or false
+	*/
 	//删除员工种类
 	public function deleteUserType($uid){
 		$this->model=null;
@@ -70,6 +140,11 @@ class UserApi extends Api{
 		$result=$this->model1->where("mk_id='%d'",$uid)->delete();
 		return $result;
 	}
+	/***
+	*修改工种单价，查询单价
+	*$uid 查询条件
+	*return array 一维数组
+	*/
 	//修改工种单价，查询单价
 	public function modifyUserKind($uid){
 		$this->model=null;
@@ -77,25 +152,43 @@ class UserApi extends Api{
 		$result=$this->model1->where("mk_id='%d'",$uid)->find();
 		return $result; 
 	}
+	/***
+	*修改单价
+	*$data 查询条件
+	*return true or false
+	*/
 	//修改单价
-	public function userModifyKind($uid,$mk_price){
+	public function userModifyKind($data){
 		$this->model=null;
 		$this->model1=D("Memberkind");
-		$result=$this->model1->where("mk_id='%d' AND mk_price='%s'",$uid,$mk_price)->save();
+		$mk_id=$data['mk_id'];
+		$result=$this->model1->where("mk_id='%d'",intval($mk_id))->data($data)->save();
 		return $result;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
+	/***
+	*添加工种类型
+	*$data 查询条件
+	*return true or false
+	*/
+	public function addUserKindd($data){
+		$result=0;
+		$mk_id="";
+		$this->model=null;
+		$this->model1=D("Memberkind");
+		$find=$this->model1->where("mk_name='%s'",$data['mk_name'])->find();
+		if(!empty($find)){
+			$result=1;
+		}else{
+			$result=$this->model1->where("mk_id=%d",intval($mk_id))->data($data)->add();
+			if($result){
+				$result=2;
+			}else{
+				$result=3;
+			}
+		}
+		return $result;
+	}
 
 
 
@@ -113,6 +206,7 @@ class UserApi extends Api{
 			$result['m_passwords']=null;
 			session(null);
 			session('LOGIN_INFO',$result);
+			$_SESSION['account']=$account;
 			return TRUE;
 		}else{
 			return FALSE;

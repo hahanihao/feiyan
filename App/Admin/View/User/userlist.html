@@ -25,14 +25,21 @@
           </li>
          
         </ul>
-        
+         <div class="pull-right">
+          <form class="navbar-form navbar-left" role="search" method="post" action="__MODULE__/User/finduser">
+            <div class="form-group">
+              <input type="text" id="m_name" name="m_name" class="form-control" placeholder="员工姓名"></div>
+              
+            <button type="submit" class="btn btn-primary">查询</button>
+          </form>
+        </div>
       </div>
     </div>
     <div class="hrdivblack"></div>
     <!--导航线 end-->
     <div class="row ">
     <!--form开始-->
-    <form name="form" method="post" id="form" action="__MODULE__/Cases/casedeletebatch ">
+    <form name="form" method="post" id="form" action=" ">
       <table class="table table-bordered table-hover table-margin" id="table1">
         <thead>
           <tr>
@@ -66,7 +73,10 @@
          <!--  <tr><td colspan="9"><input type="checkbox" id="selAll" onclick="selectAll();" />全选/反选&nbsp;&nbsp;<a href="#">/</a>&nbsp;&nbsp;
                  <button type="submit"  onclick="delMuti()" >删除</button>
                 <?=$show?></td></tr>  -->
-        
+          <tr>
+            <td colspan="8"><?=$show?></td>
+          </tr>
+      
         </tbody>
       </table>
       <!--form结束-->

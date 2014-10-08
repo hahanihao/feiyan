@@ -25,7 +25,8 @@ class UserController extends AdminController{
 		if(empty($result)){
 			$this->error("没有相关记录！");
 		}else{
-			$this->assign('list',$result);
+			$this->assign('show',$result['page']);
+			$this->assign('list',$result['datalist']);
 			$this->display('userlist');
 		}
 
@@ -53,23 +54,17 @@ class UserController extends AdminController{
 		$this->display('useredit');
 		}
 	}
+
+
 	//修改员工信息
 	public function userModify(){
-
-		$m_id=I('post.m_id');
-		$m_name=I('post.m_name');
-		$m_gender=I('post.m_gender');
-		$m_price=I('post.m_price');
-		$m_phone=I('post.m_phone');
-		$m_idcard=I('post.m_idcard');
-		$m_address=I('post.m_address');
-		$m_remark=I('post.m_remark');
-		if(empty($m_id)||empty($m_name)||empty($m_price)){
-			$this->error("员工姓名或员工薪酬不能为空！");
+		$data=I('post.');
+		if(empty($data['m_id'])||empty($data['m_name'])||empty($data['m_price'])||empty($data['m_phone'])){
+			$this->error("填写完整信息！");
 		}else{
-			$result=$this->userapi->userModify($m_id,$m_name,$m_price,$m_gender,$m_phone,$m_idcard,$m_address,$m_remark);
+			$result=$this->userapi->userModify($data);
 			if($result==true){
-				$this->error("修改成功！修改失败!请检查相关原因！");
+				$this->success("修改成功！");
 			}else{
 				$this->error("修改失败!请检查相关原因！");
 			}
@@ -83,7 +78,7 @@ class UserController extends AdminController{
 		}else{
 			$result=$this->userapi->userDelete($m_id);
 			if($result==true){
-				$this->error("删除成功");
+				$this->success("删除成功");
 			}else{
 				$this->error("删除失败!请检查相关原因！!");
 			}
@@ -105,7 +100,7 @@ class UserController extends AdminController{
 		}else{
 			$result=$this->userapi->deleteUserType($uid);
 			if($result==true){
-				$this->error("删除成功!");
+				$this->success("删除成功!");
 			}else{
 				$this->error("删除成功!删除失败");
 			}
@@ -124,15 +119,14 @@ class UserController extends AdminController{
 	}
 	//修改员工的单价
 	public function userModifyKind(){
-		$uid=I('post.mk_id');
-		$mi_price=I('post.mk_price');
-		if(empty($mi_price)){
+		$data=I('post.');
+		if(empty($data['mk_price'])){
 			$this->error("员工单价不能为空!");
 		}else{
-			if($mi_price>0){
-				$result=$this->userapi->userModifyKind($uid,$mi_price);
+			if($data['mk_price']>0){
+				$result=$this->userapi->userModifyKind($data);
 				if($result==true){
-					$this->error("修改成功");
+					$this->success("修改成功");
 				}else{
 					$this->error("修改失败");
 				}
@@ -141,23 +135,24 @@ class UserController extends AdminController{
 			}
 		}
 	}
+
+
+
 	//添加工种类型
 	public function addUserKind(){
-		$mk_name=I('post.mk_name');
-		$mk_price=I('post.mk_price');
-		if(empty($mk_name)||empty($mk_price)){
+		$data=I('post.');
+		if(empty($data['mk_name'])||empty($data['mk_price'])){
 			$this->error("工种名称或工种单价不能为空");
 		}else{
-			$this->model1=D("Memberkind");
-
-			$data['mk_name']=$mk_name;
-            $data['mk_price']=$mk_price;
-            $result=$this->model1->add($data);
-			//$result=$this->userapi->addUserKindd($mk_name,$mk_price);
-			if($result){
-				$this->error("添加成功!");
-			}else{
-				$this->error("添加失败!");
+			$result=$this->userapi->addUserKindd($data);
+			if($result==1){
+				$this->error("该类型已有！");
+			}
+			if($result==2){
+				$this->success("添加成功");
+			}
+			if($result==3){
+				$this->error("添加失败");
 			}
 		}
 	}
@@ -165,8 +160,7 @@ class UserController extends AdminController{
 
 	//添加一个员工信息，获取员工信息
 	public function addUserDetail(){
-		$userdetail=M('Memberkind');
-        $casetype=$userdetail->select();
+        $casetype=$this->userapi->getUserTypeBy();
         $this->assign('casetype',$casetype);
         if(is_array($casetype)){
             $this->display('adduserdetail');
@@ -176,34 +170,34 @@ class UserController extends AdminController{
 	}
 	//添加一个员工信息
 	public function addUserSingle(){
-		//var_dump(I('post.'));
-		$m_name=I('post.m_name');
-		$m_gender=I('post.m_gender');
-		$m_price=I('post.m_price');
-		$mk_id=I('post.mk_id');
-		$m_phone=I('post.m_phone');
-		$m_idcard=I('post.m_idcard');
-		$m_address=I('post.m_address');
-		$m_remark=I('post.m_remark');
-		if(empty($m_name)||empty($m_price)||empty($m_phone)){
+		$data=I('post.');
+		if(empty($data['m_name'])||empty($data['m_price'])||empty($data['m_phone'])){
 			$this->error("员工姓名或员工薪酬不能为空或号码不能为空！");
 		}else{
-			$adduser=M('Member');
-			$data['m_name']=$m_name;
-			$data['m_gender']=$m_gender;
-			$data['m_price']=$m_price;
-			$data['mk_id']=$mk_id;
-			$data['m_phone']=$m_phone;
-			$data['m_idcard']=$m_idcard;
-			$data['m_address']=$m_address;
-			$data['m_remark']=$m_remark;
-			$result=$adduser->add($data);
+			$result=$this->userapi->addUserSingle($data);
 			if($result){
-				$this->error("添加成功");
+				$this->success("添加成功");
 			}else{
 				$this->error("添加失败！");
 			}
 		}
+	}
+	//查询某个用户信息
+	public function findUser(){
+		$data=I('post.m_name');
+		if(empty($data)){
+			$this->error("请输入用户名");
+		}else{
+		    $result = $this->userapi->findOneUser($data);
+		    if(empty($result)){
+		    	$this->error("没有相关记录");
+		    }else{
+		   	 	$this->assign('list',$result);
+				$this->display('userlist');
+		    }
+		}
+
+
 	}
 
 

@@ -2,10 +2,9 @@
 <html>
 <head>
   <title></title>
-  <link rel="stylesheet" href="<{$Think.const.CSS_URL}>bootstrap.css"/>
-  <link rel="stylesheet" href="<{$Think.const.CSS_URL}>manager.css"/>
-  <script type="text/javascript" src="<{$Think.const.JS_URL}>html5.js" ></script>
-  <script type="text/javascript" src="<{$Think.const.JS_URL}>jquery-1.6.2.min.js"></script>
+  <link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+  <link rel="stylesheet" href="__CSS__manager.css"/>
+  <script type="text/javascript" src="__JS__html5.js" ></script>
 </head>
 <body>
 
@@ -39,8 +38,8 @@
 
       <!--顶层开始 start-->
       <div class="row">
-        <form action="__CONTROLLER__/updateadmin" method="post" >
-
+        <form action="__MODULE__/Admininfo/updateBaseInfoBy" method="post" >
+        <input type="hidden" name="m_id" value="<?php echo $result['m_id']; ?>">
           <div class="form-horizontal" >
 
             <!--一行开始 start-->
@@ -49,7 +48,7 @@
               <div class="col-md-9">
                 <p class="input-group">
                   <span class="input-group-addon">：</span>
-                  <input type="text" class="form-control" readonly="readonly" value="<{$result['a_account']}>"></p>
+                  <input name="m_account" type="text" class="form-control" readonly="readonly" value="<?php echo $result['m_account']; ?>"></p>
               </div>
             </div>
             <!--一行结束  end-->
@@ -60,29 +59,49 @@
               <div class="col-md-9">
                 <p class="input-group">
                   <span class="input-group-addon">：</span>
-                  <input type="text" class="form-control" id="adminname" name="adminname" value="<{$result['a_name']}>"></p>
+                  <input type="text" class="form-control" id="m_name" name="m_name" value="<{$result['m_name']}>"></p>
               </div>
             </div>
             <!--一行结束  end-->
 
             <!--一行开始 start-->
             <div class="form-group col-md-6">
-              <label for="adminemail" class="col-sm-3 control-label">邮箱</label>
+              <label for="adminemail" class="col-sm-3 control-label">电话</label>
               <div class="col-md-9">
                 <p class="input-group">
                   <span class="input-group-addon">：</span>
-                  <input type="text" class="form-control" id="adminemail" name="adminemail" value="<{$result['a_email']}>"></p>
+                  <input type="text" class="form-control" id="m_phone" name="m_phone" value="<{$result['m_phone']}>"></p>
               </div>
             </div>
             <!--一行结束  end-->
 
             <!--一行开始 start-->
             <div class="form-group col-md-6">
-              <label for="adminphone" class="col-sm-3 control-label">电话</label>
+              <label for="adminphone" class="col-sm-3 control-label">身份证号</label>
               <div class="col-md-9">
                 <p class="input-group">
                   <span class="input-group-addon">：</span>
-                  <input type="text" class="form-control" id="adminphone" name="adminphone" value="<{$result['a_tel']}>"></p>
+                  <input type="text" class="form-control" id="m_idcard" name="m_idcard" value="<{$result['m_idcard']}>"></p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+             <!--一行开始 start-->
+            <div class="form-group col-md-6">
+              <label for="adminphone" class="col-sm-3 control-label">地址</label>
+              <div class="col-md-9">
+                <p class="input-group">
+                  <span class="input-group-addon">：</span>
+                  <input type="text" class="form-control" id="m_address" name="m_address" value="<{$result['m_address']}>"></p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+              <!--一行开始 start-->
+            <div class="form-group col-md-6">
+              <label for="adminphone" class="col-sm-3 control-label">备注</label>
+              <div class="col-md-9">
+                <p class="input-group">
+                  <span class="input-group-addon">：</span>
+                  <input type="text" class="form-control" id="m_remark" name="m_remark" value="<{$result['m_remark']}>"></p>
               </div>
             </div>
             <!--一行结束  end-->

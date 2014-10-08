@@ -47,7 +47,7 @@
                     ：
                   </span>
                   <label  class="form-control" id="1" >
-                  <?php echo $result['a_account']; ?>
+                  <?php echo $result['m_account']; ?>
                   </label>
                   </p>
               </div>
@@ -63,27 +63,13 @@
                    ：
                   </span>
                   <label  class="form-control" id="1" >
-                  <?php echo $result['a_name']; ?>
+                  <?php echo $result['m_name']; ?>
                   </label>
                   </p>
               </div>
             </div>
             <!--一行结束  end-->
-            <!--一行开始 start-->
-            <div class="form-group">
-              <label for="1" class="col-sm-4 control-label">管理员邮箱</label>
-              <div class="col-md-8">
-                <p class="input-group">
-                  <span class="input-group-addon">
-                    ：
-                  </span>
-                  <label  class="form-control" id="1" >
-                   <?php echo $result['a_email']; ?>
-                  </label>
-                  </p>
-              </div>
-            </div>
-            <!--一行结束  end--   
+           
 
              <!--一行开始 start-->
             <div class="form-group">
@@ -94,7 +80,7 @@
                     ：
                   </span>
                   <label  class="form-control" id="1" >
-                    <?php echo $result['a_tel']; ?>
+                    <?php echo $result['m_phone']; ?>
                   </label>
                   </p>
               </div>
@@ -112,14 +98,14 @@
 
             <!--一行开始 start-->
             <div class="form-group">
-              <label for="1" class="col-sm-4 control-label">上次登录时间</label>
+              <label for="1" class="col-sm-4 control-label">身份证号</label>
               <div class="col-md-8">
                 <p class="input-group">
                   <span class="input-group-addon">
                     ：
                   </span>
                   <label  class="form-control" id="1" >
-                  <?php echo $result['a_lastlogintime']; ?>
+                  <?php echo $result['m_idcard']; ?>
                   </label>
                   </p>
               </div>
@@ -127,14 +113,14 @@
             <!--一行结束  end-->
              <!--一行开始 start-->
             <div class="form-group">
-              <label for="1" class="col-sm-4 control-label">管理员登录次数</label>
+              <label for="1" class="col-sm-4 control-label">地址</label>
               <div class="col-md-8">
                 <p class="input-group">
                   <span class="input-group-addon">
                     ：
                   </span>
                   <label  class="form-control" id="1" >
-                  <?php echo $result['a_counttime']; ?>
+                  <?php echo $result['m_address']; ?>
                   </label>
                   </p>
               </div>
@@ -142,14 +128,14 @@
             <!--一行结束  end-->
               <!--一行开始 start-->
             <div class="form-group">
-              <label for="1" class="col-sm-4 control-label">管理员上次登录ip</label>
+              <label for="1" class="col-sm-4 control-label">备注</label>
               <div class="col-md-8">
                 <p class="input-group">
                   <span class="input-group-addon">
                     ：
                   </span>
                   <label  class="form-control" id="1" >
-                 <?php echo $result['a_lastloginip']; ?>
+                 <?php echo $result['m_remark']; ?>
                   </label>
                   </p>
               </div>
@@ -163,7 +149,7 @@
                   <!--<span class="input-group-addon">
                   </span> -->
                   <label  id="1" >
-                    <a href="__MODULE__/Admin/adminmodify" class="btn btn-primary">修改我的信息</a>
+                    <a href="__MODULE__/Admininfo/updateBaseInfoUi" class="btn btn-primary">修改我的信息</a>
                   </label>
                   </p>
               </div>

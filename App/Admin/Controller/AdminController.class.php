@@ -9,12 +9,10 @@ class AdminController extends Controller{
 	public function _initialize(){
 		if((is_login())){
 			$this->assign('login_info',session('LOGIN_INFO'));
-<<<<<<< HEAD
-		
-=======
+
 			$this->assign('upload_img',C('UPLOADIMG_URL'));
 
->>>>>>> de51379a490d9483ea76bdaa3203ed921ef06929
+
 		}else{
 			//跳到登录界面：TODO：：
 			redirect('/Index/index');
@@ -62,8 +60,7 @@ class AdminController extends Controller{
 
 
 
-<<<<<<< HEAD
-=======
+
 	/**返回上传图片的信息
 	 * 返回的是一个关联数组
 	 * 包含了文件名和文件的路劲
@@ -86,8 +83,8 @@ class AdminController extends Controller{
 			$file=array();
 			return $file;
 		}
->>>>>>> de51379a490d9483ea76bdaa3203ed921ef06929
 
+	}
 
 
 
